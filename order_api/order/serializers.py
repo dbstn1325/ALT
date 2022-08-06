@@ -6,8 +6,13 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id',
-                  'title',
-                  'description',
-                  'category',
-                  'deadLine',
+                  'design',
+                  'start_date',
+                  'end_date',
+                  'page_count',
+                  'email',
+                  'phone_number',
+                  'content',
+                  'created_at',
+                  'updated_at',
                   )
