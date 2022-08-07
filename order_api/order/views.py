@@ -24,10 +24,12 @@ def order_list(request):
         
         order_serializer = OrderSerializer(order, many=True)
         # object를 serialize 해주기 위해서 safe=False 해준다.
-        # return JsonResponse(order_serializer.data, safe=False)
-        return Response(order_serializer.data)
+        return JsonResponse(order_serializer.data, safe=False)
+        # return Response(order_serializer.data)
 
     return JsonResponse(order_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 @api_view(['GET', 'POST'])
 def order_create(request):
@@ -49,21 +51,51 @@ def order_detail(request, pk):
     try: 
         order = Order.objects.get(pk=pk)
     except Order.DoesNotExist:
-        return JsonResponse({'message': 'The Order does not exist'}, status=status.HTTP_404_NOT_FOUND)         
+        return JsonResponse({'message': '존재하지 않는 주문목록 입니다.'}, status=status.HTTP_404_NOT_FOUND)         
     
 
     if request.method == 'GET': 
         order_serializer = OrderSerializer(order)
         return JsonResponse(order_serializer.data) 
- 
-    elif request.method == 'PUT':
+
+    return JsonResponse(order_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+    
+
+
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def order_update(request, pk):
+    try: 
+        order = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
+        return JsonResponse({'message': '존재하지 않는 주문목록 입니다.'}, status=status.HTTP_404_NOT_FOUND)         
+    
+
+    if request.method == 'PUT':
         order_data = JSONParser().parse(request) 
         order_serializer = OrderSerializer(order, data=order_data) 
+
         if order_serializer.is_valid(): 
             order_serializer.save() 
             return JsonResponse(order_serializer.data) 
-        return JsonResponse(order_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+
+    return JsonResponse(order_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
-    elif request.method == 'DELETE':
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def order_delete(request, pk):
+    try: 
+        order = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
+        return JsonResponse({'message': '존재하지 않는 주문목록 입니다.'}, status=status.HTTP_404_NOT_FOUND)         
+        
+    if request.method == 'DELETE':
         order.delete()
-        return JsonResponse({'message': 'Tutorial was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+        return JsonResponse({'message': '성공적으로 삭제 되었습니다.'}, status=status.HTTP_204_NO_CONTENT)   
+
+    return JsonResponse({'message': '잘못된 요청입니다.'}, status=status.HTTP_400_BAD_REQUEST)     
+
+

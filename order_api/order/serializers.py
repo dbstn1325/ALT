@@ -12,6 +12,7 @@ class OrderSerializer(serializers.ModelSerializer):
                   'page_count',
                   'email',
                   'phone_number',
+                  'options',
                   'content',
                   'created_at',
                   'updated_at',
