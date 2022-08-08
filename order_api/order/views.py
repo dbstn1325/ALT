@@ -37,7 +37,7 @@ def order_list(request):
     return JsonResponse(order_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-import json
+
 @swagger_auto_schema(method='POST', request_body=OrderSerializer)
 @api_view(['POST'])
 def order_create(request):
@@ -45,8 +45,8 @@ def order_create(request):
         order_data = JSONParser().parse(request)
         send_mail(
         '주문 의뢰',
-        '의뢰내용:' + json.dumps(order_data, sort_keys=True, indent="\t", ensure_ascii=False),
-        'from@order.com',
+        '주문 의뢰가 도착했습니다.',
+        'wjddbstn023@naver.com',
         ['wjddbstn023@naver.com'],
         fail_silently=False,
         )
