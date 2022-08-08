@@ -17,6 +17,9 @@ pymysql.install_as_MySQLdb()
 import os
 import environ
 
+# rds
+from config_ops import ConfigDEV
+
 from pathlib import Path\
 
 # 환경변수 불러올 수 있도록 세팅
@@ -62,6 +65,8 @@ INSTALLED_APPS = [
     'rest_framework',
     # CORS
     'corsheaders',
+    # swagger
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -104,9 +109,8 @@ WSGI_APPLICATION = 'order_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': env.db()
-}
+config = ConfigDEV()
+DATABASES = config.DATABASES
 
 
 # Password validation
@@ -156,3 +160,11 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
 )
+
+# EMAIL SENDING VARIABLES
+EMAIL_HOST= "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER =  env('HOST_USER')
+EMAIL_HOST_PASSWORD = env('HOST_PASSWORD')
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

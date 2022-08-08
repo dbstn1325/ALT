@@ -140,6 +140,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Rds
+config_ops.py
+
 # Spyder project settings
 .spyderproject
 .spyproject
