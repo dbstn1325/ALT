@@ -110,8 +110,16 @@ WSGI_APPLICATION = 'order_api.wsgi.application'
 
 
 DATABASES = {
-    'default': env.db()
+    'default' : {
+        'ENGINE': 'django.db.backends.mysql',   
+        'NAME': 'altdb',   
+        'USER': 'root',
+        'PASSWORD': '1234',                
+        'HOST': 'localhost',                    
+        'PORT': '3306',                          
+    }
 }
+ 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
