@@ -10,15 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 # mysql 설정
+from email.policy import default
 import pymysql
 pymysql.install_as_MySQLdb()
 
 # env 설정
 import os
 import environ
-
-# rds
-from config_ops import ConfigDEV
 
 from pathlib import Path\
 
@@ -109,8 +107,21 @@ WSGI_APPLICATION = 'order_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-config = ConfigDEV()
-DATABASES = config.DATABASES
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': '3306',
+        'OPTIONS':{
+            'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+        
+    }
+}
 
 
 # Password validation
