@@ -43,13 +43,13 @@ def order_list(request):
 def order_create(request):
     if request.method == 'POST':
         order_data = JSONParser().parse(request)
-        send_mail(
-        '주문 의뢰',
-        '주문 의뢰가 도착했습니다.',
-        'wjddbstn023@naver.com',
-        ['wjddbstn023@naver.com'],
-        fail_silently=False,
-        )
+        # send_mail(
+        # '주문 의뢰',
+        # '주문 의뢰가 도착했습니다.',
+        # 'wjddbstn023@naver.com',
+        # ['wjddbstn023@naver.com'],
+        # fail_silently=False,
+        # )
         order_serializer = OrderSerializer(data=order_data)
         # (JOSN화된) 데이터가 조건에 유효한 데이터라면,
         if order_serializer.is_valid():
