@@ -28,6 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_URL = [
+    BASE_DIR / "static", 
+]
 
 # Application definition
 
@@ -124,7 +127,9 @@ USE_TZ = False  # DB에 변경 된 TIME_ZONE 을 반영
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'staticfiles/'
+
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
